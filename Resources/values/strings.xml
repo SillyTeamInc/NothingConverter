@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">NothingEncoder</string>
+    <string name="main_title">ENCODER_</string>
+    <string name="main_subtitle">→ MP3</string>
+    <string name="settings_label">SETTINGS</string>
+    <string name="settings_chevron">▼</string>
+    <string name="output_format_label">OUTPUT FORMAT</string>
+    <string name="output_path_label">OUTPUT PATH</string>
+    <string name="output_path_hint">Recordings/Voice Recorder</string>
+    <string name="selected_file_label">SELECTED FILE</string>
+    <string name="file_name_placeholder">—</string>
+    <string name="status_no_files_loaded">NO FILES LOADED</string>
+    <string name="share_button">[SHARE]</string>
+    <string name="share_separator">|</string>
+    <string name="view_folder_button">[VIEW FOLDER]</string>
+    <string name="select_button">SELECT</string>
+    <string name="convert_button">CONVERT</string>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="NothingTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:windowBackground">@color/nothing_black</item>
+        <item name="android:colorPrimary">@color/nothing_white</item>
+        <item name="android:colorPrimaryDark">@color/nothing_black</item>
+        <item name="android:colorAccent">@color/nothing_white</item>
+        <item name="android:textColorPrimary">@color/nothing_white</item>
+        <item name="android:statusBarColor">@color/nothing_black</item>
+        <item name="android:navigationBarColor">@color/nothing_black</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="NothingLabel">
+        <item name="android:textColor">@color/nothing_white</item>
+        <item name="android:fontFamily">@font/space_mono_regular</item>
+    </style>
+
+    <style name="NothingLabel.DotMatrix">
+        <item name="android:textColor">@color/nothing_white</item>
+        <item name="android:letterSpacing">0.15</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/space_mono_regular</item>
+    </style>
+
+    <style name="NothingButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">#1A1A1A</item>
+        <item name="strokeColor">#444444</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cornerRadius">2dp</item>
+        <item name="android:textColor">@color/nothing_white</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:fontFamily">@font/space_mono_regular</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+    </style>
+
+    <style name="NothingButton.Primary" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/nothing_white</item>
+        <item name="cornerRadius">2dp</item>
+        <item name="android:textColor">@color/nothing_black</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:fontFamily">@font/space_mono_regular</item>
+    </style>
+</resources>

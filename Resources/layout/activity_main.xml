@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:background="@color/nothing_black"
+            android:clipToPadding="false"
+            android:paddingBottom="24dp">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingTop="48dp"
+            android:paddingBottom="32dp">
+        <!-- todo: use an actual nothing-style dotmatrix font for the title -->
+        <TextView
+                android:id="@+id/tvAppTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/main_title"
+                android:textSize="28sp"
+                android:textColor="@color/nothing_white"
+                android:fontFamily="@font/ndot55_regular"
+                android:letterSpacing="0.05"
+                android:layout_marginBottom="4dp"/>
+
+        <TextView
+                android:id="@+id/tvAppSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/main_subtitle"
+                android:textSize="13sp"
+                android:textColor="@color/nothing_grey_text"
+                android:fontFamily="@font/space_mono_regular"
+                android:layout_marginBottom="20dp"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/nothing_border"
+                android:layout_marginBottom="12dp"/>
+
+        <LinearLayout
+                android:id="@+id/layoutSettingsToggle"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="0dp"
+        >
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/settings_label"
+                    android:textSize="10sp"
+                    android:textColor="@color/nothing_grey_text"
+                    android:fontFamily="@font/space_mono_regular"
+                    android:letterSpacing="0.2"/>
+
+            <TextView
+                    android:id="@+id/tvSettingsChevron"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_chevron"
+                    android:textSize="10sp"
+                    android:textColor="@color/nothing_grey_text"
+                    android:fontFamily="@font/space_mono_regular"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/layoutSettingsBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:background="@drawable/bg_nothing_card"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/output_format_label"
+                    android:textSize="10sp"
+                    android:textColor="@color/nothing_grey_text"
+                    android:fontFamily="@font/space_mono_regular"
+                    android:letterSpacing="0.2"
+                    android:layout_marginBottom="8dp"/>
+
+            <Spinner
+                    android:id="@+id/spinnerFormat"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_nothing_card"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:layout_marginBottom="8dp"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/output_path_label"
+                    android:textSize="10sp"
+                    android:textColor="@color/nothing_grey_text"
+                    android:fontFamily="@font/space_mono_regular"
+                    android:letterSpacing="0.2"
+                    android:layout_marginBottom="8dp"/>
+
+            <EditText
+                    android:id="@+id/etOutputPath"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="@string/output_path_hint"
+                    android:textColor="@color/nothing_white"
+                    android:textColorHint="@color/nothing_grey_text"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/space_mono_regular"
+                    android:background="@drawable/bg_nothing_card"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:layout_marginBottom="8dp"/>
+
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/tvSelectedFileLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/selected_file_label"
+                android:textSize="10sp"
+                android:textColor="@color/nothing_grey_text"
+                android:fontFamily="@font/space_mono_regular"
+                android:letterSpacing="0.2"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"/>
+
+        <LinearLayout
+                android:id="@+id/cardFileInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_nothing_card"
+                android:padding="16dp"
+                android:layout_marginBottom="24dp"
+                android:visibility="gone">
+
+            <TextView
+                    android:id="@+id/tvFileName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/file_name_placeholder"
+                    android:textSize="14sp"
+                    android:textColor="@color/nothing_white"
+                    android:fontFamily="@font/space_mono_regular"
+                    android:ellipsize="middle"
+                    android:maxLines="1"/>
+
+            <TextView
+                    android:id="@+id/tvFileFormat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:textColor="@color/nothing_red"
+                    android:fontFamily="@font/space_mono_regular"
+                    android:layout_marginTop="4dp"/>
+
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/status_no_files_loaded"
+                android:textSize="11sp"
+                android:textColor="@color/nothing_grey_text"
+                android:fontFamily="@font/space_mono_regular"
+                android:letterSpacing="0.1"
+                android:layout_marginTop="4dp"/>
+
+        <LinearLayout
+                android:id="@+id/layoutShareView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:visibility="gone">
+            <TextView
+                    android:id="@+id/tvShareButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/share_button"
+                    android:textSize="11sp"
+                    android:textColor="@color/nothing_grey_text"
+                    android:fontFamily="@font/space_mono_regular"
+                    android:letterSpacing="0.1"
+                    android:layout_marginEnd="8dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/share_separator"
+                    android:textSize="11sp"
+                    android:textColor="@color/nothing_grey_text"
+                    android:fontFamily="@font/space_mono_regular"
+                    android:letterSpacing="0.1"
+                    android:layout_marginEnd="8dp"/>
+            <TextView
+                    android:id="@+id/tvViewButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/view_folder_button"
+                    android:textSize="11sp"
+                    android:textColor="@color/nothing_grey_text"
+                    android:fontFamily="@font/space_mono_regular"
+                    android:letterSpacing="0.1"/>
+        </LinearLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal">
+
+            <Button
+                    android:id="@+id/btnSelectFile"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/select_button"
+                    android:textSize="12sp"
+                    style="@style/NothingButton"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingTop="0dp"
+                    android:paddingBottom="0dp"
+                    android:layout_marginEnd="8dp"/>
+
+            <Button
+                    android:id="@+id/btnConvert"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/convert_button"
+                    android:textSize="12sp"
+                    style="@style/NothingButton.Primary"
+                    android:enabled="false"
+                    android:alpha="0.4"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
