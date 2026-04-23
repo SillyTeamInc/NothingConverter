@@ -213,7 +213,6 @@ public static class ConverterService
 
         var savedUri = await Task.Run(() =>
             SaveToMediaStore(context, tempOutputPath, outFileName, format, relativePath)).ConfigureAwait(false);
-        LastSavedFile = tempOutputPath;
         LastSavedRelativePath = relativePath;
 
         return savedUri;
