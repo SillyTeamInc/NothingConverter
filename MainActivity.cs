@@ -1,5 +1,6 @@
 global using Log = Android.Util.Log;
 using System.Diagnostics;
+using _Microsoft.Android.Resource.Designer;
 using Android;
 using Android.Content;
 using Android.Content.PM;
@@ -18,24 +19,17 @@ public struct ConvertedFile
     public string RelativePath { get; init; }
     public string DisplayName { get; init; }
 }
-
 [Activity(
     Label = "Nothing Encoder",
     MainLauncher = true,
     Theme = "@style/NothingTheme",
     LaunchMode = LaunchMode.SingleTop)]
-[IntentFilter(
-    new[] { Android.Content.Intent.ActionSend },
-    Categories = new[] { Android.Content.Intent.CategoryDefault },
-    DataMimeType = "audio/*")]
-[IntentFilter(
-    new[] { Android.Content.Intent.ActionSend },
-    Categories = new[] { Android.Content.Intent.CategoryDefault },
-    DataMimeType = "video/*")]
-[IntentFilter(
-    new[] { Android.Content.Intent.ActionSend },
-    Categories = new[] { Android.Content.Intent.CategoryDefault },
-    DataMimeType = "image/*")]
+[IntentFilter(new[] { Intent.ActionSend }, Categories = new[] { Intent.CategoryDefault }, DataMimeType = "audio/*")]
+[IntentFilter(new[] { Intent.ActionSend }, Categories = new[] { Intent.CategoryDefault }, DataMimeType = "video/*")]
+[IntentFilter(new[] { Intent.ActionSend }, Categories = new[] { Intent.CategoryDefault }, DataMimeType = "image/*")]
+[IntentFilter(new[] { Intent.ActionSendMultiple }, Categories = new[] { Intent.CategoryDefault }, DataMimeType = "audio/*")]
+[IntentFilter(new[] { Intent.ActionSendMultiple }, Categories = new[] { Intent.CategoryDefault }, DataMimeType = "video/*")]
+[IntentFilter(new[] { Intent.ActionSendMultiple }, Categories = new[] { Intent.CategoryDefault }, DataMimeType = "image/*")]
 public class MainActivity : AppCompatActivity
 {
     private const int RequestPickMedia = 1001;
@@ -66,7 +60,7 @@ public class MainActivity : AppCompatActivity
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
-        SetContentView(Resource.Layout.activity_main);
+        SetContentView(ResourceConstant.Layout.activity_main);
 
         FFmpegKitConfig.EnableRedirection(); 
         FFmpegKitConfig.LogRedirectionStrategy = LogRedirectionStrategy.NeverPrintLogs;
@@ -74,23 +68,23 @@ public class MainActivity : AppCompatActivity
 
         _selectedUris = [];
         _lastConvertedFiles = [];
-        _tvAppTitle           = FindViewById<TextView>(Resource.Id.tvAppTitle)!;
-        _tvAppSubtitle        = FindViewById<TextView>(Resource.Id.tvAppSubtitle)!;
-        _tvFileName           = FindViewById<TextView>(Resource.Id.tvFileName)!;
-        _tvFileFormat         = FindViewById<TextView>(Resource.Id.tvFileFormat)!;
-        _tvStatus             = FindViewById<TextView>(Resource.Id.tvStatus)!;
-        _tvSelectedFileLabel  = FindViewById<TextView>(Resource.Id.tvSelectedFileLabel)!;
-        _tvSettingsChevron    = FindViewById<TextView>(Resource.Id.tvSettingsChevron)!;
-        _cardFileInfo         = FindViewById<LinearLayout>(Resource.Id.cardFileInfo)!;
-        _layoutSettingsToggle = FindViewById<LinearLayout>(Resource.Id.layoutSettingsToggle)!;
-        _layoutSettingsBody   = FindViewById<LinearLayout>(Resource.Id.layoutSettingsBody)!;
-        _spinnerFormat        = FindViewById<Spinner>(Resource.Id.spinnerFormat)!;
-        _etOutputPath         = FindViewById<EditText>(Resource.Id.etOutputPath)!;
-        _btnSelectFile        = FindViewById<Button>(Resource.Id.btnSelectFile)!;
-        _btnConvert           = FindViewById<Button>(Resource.Id.btnConvert)!;
-        _layoutShareView      = FindViewById<LinearLayout>(Resource.Id.layoutShareView)!;
-        _tvShareButton        = FindViewById<TextView>(Resource.Id.tvShareButton)!;
-        _tvViewButton         = FindViewById<TextView>(Resource.Id.tvViewButton)!;
+        _tvAppTitle           = FindViewById<TextView>(ResourceConstant.Id.tvAppTitle)!;
+        _tvAppSubtitle        = FindViewById<TextView>(ResourceConstant.Id.tvAppSubtitle)!;
+        _tvFileName           = FindViewById<TextView>(ResourceConstant.Id.tvFileName)!;
+        _tvFileFormat         = FindViewById<TextView>(ResourceConstant.Id.tvFileFormat)!;
+        _tvStatus             = FindViewById<TextView>(ResourceConstant.Id.tvStatus)!;
+        _tvSelectedFileLabel  = FindViewById<TextView>(ResourceConstant.Id.tvSelectedFileLabel)!;
+        _tvSettingsChevron    = FindViewById<TextView>(ResourceConstant.Id.tvSettingsChevron)!;
+        _cardFileInfo         = FindViewById<LinearLayout>(ResourceConstant.Id.cardFileInfo)!;
+        _layoutSettingsToggle = FindViewById<LinearLayout>(ResourceConstant.Id.layoutSettingsToggle)!;
+        _layoutSettingsBody   = FindViewById<LinearLayout>(ResourceConstant.Id.layoutSettingsBody)!;
+        _spinnerFormat        = FindViewById<Spinner>(ResourceConstant.Id.spinnerFormat)!;
+        _etOutputPath         = FindViewById<EditText>(ResourceConstant.Id.etOutputPath)!;
+        _btnSelectFile        = FindViewById<Button>(ResourceConstant.Id.btnSelectFile)!;
+        _btnConvert           = FindViewById<Button>(ResourceConstant.Id.btnConvert)!;
+        _layoutShareView      = FindViewById<LinearLayout>(ResourceConstant.Id.layoutShareView)!;
+        _tvShareButton        = FindViewById<TextView>(ResourceConstant.Id.tvShareButton)!;
+        _tvViewButton         = FindViewById<TextView>(ResourceConstant.Id.tvViewButton)!;
         
         _tvShareButton.Click += OnShareClicked;
         _tvShareButton.Clickable = true;
@@ -146,14 +140,66 @@ public class MainActivity : AppCompatActivity
     protected override void OnNewIntent(Intent? intent)
     {
         base.OnNewIntent(intent);
-        if (intent != null) HandleIncomingIntent(intent);
+        if (intent == null) return;
+        Intent = intent;
+        HandleIncomingIntent(intent);
     }
 
-    private void HandleIncomingIntent(Intent intent)
+    private void HandleIncomingIntent(Intent? intent)
     {
-        if (intent.Action != Intent.ActionSend) return;
-        var uri = intent.GetParcelableExtra(Intent.ExtraStream) as Android.Net.Uri;
-        if (uri != null) LoadUris(uri);
+        var action = intent?.Action;
+        var uris = new List<Android.Net.Uri>();
+
+        switch (action)
+        {
+            case Intent.ActionSend:
+            {
+                var uri = GetParcelableExtra<Android.Net.Uri>(intent, Intent.ExtraStream);
+                if (uri != null) uris.Add(uri);
+                break;
+            }
+            case Intent.ActionSendMultiple:
+            {
+                var list = GetParcelableArrayListExtra<Android.Net.Uri>(intent, Intent.ExtraStream);
+                if (list is { Count: > 0 }) uris.AddRange(list);
+                break;
+            }
+            case Intent.ActionMain:
+            case null:
+                Log.Info("NothingEncoder", $"Launched with intent {action ?? "null"} - no files to load.");
+                break;
+            default:
+                Toast.MakeText(this, "Unsupported intent action: " + action, ToastLength.Long)?.Show();
+                Log.Warn("NothingEncoder", $"Received unsupported intent action: {action}");
+                return;
+        }
+
+        if (uris.Count > 0) LoadUris(uris.ToArray());
+    }
+
+    private T? GetParcelableExtra<T>(Intent intent, string name) where T : global::Java.Lang.Object
+    {
+        if (Build.VERSION.SdkInt >= BuildVersionCodes.Tiramisu)
+        {
+            return (T?)intent.GetParcelableExtra(name, Java.Lang.Class.FromType(typeof(T)));
+        }
+        else
+        {
+            return (T?)intent.GetParcelableExtra(name);
+        }
+    }
+
+    private IList<T>? GetParcelableArrayListExtra<T>(Intent intent, string name) where T : global::Java.Lang.Object
+    {
+        if (Build.VERSION.SdkInt >= BuildVersionCodes.Tiramisu)
+        {
+            return intent.GetParcelableArrayListExtra(name, Java.Lang.Class.FromType(typeof(T)))?.Cast<T>().ToList();
+        }
+        else
+        {
+            var list = intent.GetParcelableArrayListExtra(name);
+            return list?.Cast<T>().ToList();
+        }
     }
 
     private void SetupFormatSpinner()
@@ -163,8 +209,8 @@ public class MainActivity : AppCompatActivity
             .ToArray();
 
         var adapter = new ArrayAdapter<string>(this,
-            Resource.Layout.spinner_item, labels);
-        adapter.SetDropDownViewResource(Resource.Layout.spinner_dropdown_item);
+            ResourceConstant.Layout.spinner_item, labels);
+        adapter.SetDropDownViewResource(ResourceConstant.Layout.spinner_dropdown_item);
         _spinnerFormat.Adapter = adapter;
 
         _spinnerFormat.ItemSelected += (_, e) =>
